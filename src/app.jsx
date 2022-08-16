@@ -1,14 +1,20 @@
 import { useState } from 'react';
-import './app.css';
+import styles from './app.module.css';
 import Login from './components/login/login';
-import { googleLogin } from './service/firebaseAuth';
 
 function App({ firebaseAuthService }) {
   const [login, setLogin] = useState(false);
+  const loggedIn = () => {
+    setLogin(true);
+  };
   return (
-    <>
-      <Login firebaseAuthService={firebaseAuthService} />
-    </>
+    <div className={styles.app}>
+      <Login
+        firebaseAuthService={firebaseAuthService}
+        setLogin={loggedIn}
+        isLoggedIn={login}
+      />
+    </div>
   );
 }
 

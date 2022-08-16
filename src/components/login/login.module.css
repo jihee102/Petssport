@@ -1,14 +1,6 @@
-@value makerWhite from '../../common/colors.css';
-@value makerBlue from '../../common/colors.css';
+@value makerWhite,makerBlue , makerGrey from '../../common/colors.css';
 
-.login{
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0  , 0.65) ;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .loginContainer{
     width: 40%;

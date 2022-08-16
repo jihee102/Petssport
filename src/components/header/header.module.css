@@ -4,6 +4,7 @@
 .header {
     background-color: makerBlue;
     color: makerWhite;
+    position: relative;
 }
 
 .logoContainer{
