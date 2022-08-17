@@ -1,0 +1,51 @@
+@value makerShadow, makerBlue , makerLightGrey from '../../common/colors.css';
+
+
+.card{
+    border-radius: 20px;
+    padding: 1em;
+    border: 1px solid makerBlue; 
+    border-top: 2em solid makerBlue;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2em;
+    position: relative;
+}
+
+.image{
+    width: 10em;
+    height: 10em;
+    border-radius: 50%;
+    box-shadow:5px 5px 15px 5px makerShadow;
+}
+
+.cardDetails{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.vaccines{
+    flex: 1 1 80%;
+    display: flex;
+    justify-content: center;
+}
+
+tr{
+    padding: 5px;
+}
+
+tr:first-of-type {
+    background-color: makerLightGrey;
+
+}
+
+.stamp{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+}
