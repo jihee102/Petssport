@@ -1,12 +1,39 @@
-@value makerWhite from '../../common/colors.css';
+@value makerWhite,makerBlue from '../../common/colors.css';
+@value mediaQuery from '../../common/size.css';
 
 
 .mainContainer{
-    width: 90%;
+    width: 100%;
 
 }
 
 .content{
     background-color: makerWhite;
     height: 50vh;
+    display: flex;
+}
+
+.contentContainer{
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.title{
+   color: makerBlue;
+   width: 100%;
+   margin-bottom: 1em;
+   text-align: center ;
+}
+
+@media screen and (max-width:mediaQuery ) {
+    .content{
+        flex-direction: column;
+    }
+
+    .contentContainer{
+        flex-basis: 100%;
+    }
 }
