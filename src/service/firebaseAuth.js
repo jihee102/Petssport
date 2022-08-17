@@ -21,7 +21,9 @@ class FirebaseAuth {
     return signInWithPopup(this.firebaseAuth, authProvider);
   }
 
-  logout() {}
+  logout() {
+    this.firebaseAuth.signOut();
+  }
 
   getAuthProvider(name) {
     switch (name) {
@@ -34,6 +36,11 @@ class FirebaseAuth {
       default:
         throw new Error('Not supported provider');
     }
+  }
+  onAuthChange(onUserChanged) {
+    getAuth().onAuthStateChanged((user) => {
+      onUserChanged(user);
+    });
   }
 }
 

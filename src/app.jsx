@@ -1,19 +1,24 @@
-import { useState } from 'react';
 import styles from './app.module.css';
 import Login from './components/login/login';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Main from './components/main/main';
 
 function App({ firebaseAuthService }) {
-  const [login, setLogin] = useState(false);
-  const loggedIn = () => {
-    setLogin(true);
-  };
   return (
     <div className={styles.app}>
-      <Login
-        firebaseAuthService={firebaseAuthService}
-        setLogin={loggedIn}
-        isLoggedIn={login}
-      />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            exact
+            path='/'
+            element={<Login firebaseAuthService={firebaseAuthService} />}
+          />
+          <Route
+            path='app'
+            element={<Main firebaseAuthService={firebaseAuthService} />}
+          />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

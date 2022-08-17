@@ -1,0 +1,12 @@
+@value makerWhite from '../../common/colors.css';
+
+
+.mainContainer{
+    width: 90%;
+
+}
+
+.content{
+    background-color: makerWhite;
+    height: 50vh;
+}

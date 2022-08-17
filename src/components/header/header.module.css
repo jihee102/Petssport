@@ -1,5 +1,4 @@
-@value makerBlue from '../../common/colors.css';
-@value makerWhite from '../../common/colors.css';
+@value makerBlue, makerWhtie from '../../common/colors.css';
 
 .header {
     background-color: makerBlue;
