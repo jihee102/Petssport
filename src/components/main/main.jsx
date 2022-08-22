@@ -3,7 +3,8 @@ import Footer from '../footer/footer';
 import Header from '../header/header';
 import styles from './main.module.css';
 import { useNavigate } from 'react-router-dom';
-import CardForm from '../cardForm/cardForm';
+import CardAddForm from '../cardAddForm/cardAddForm';
+import CardEditForm from '../cardEditForm/cardEditForm';
 import Card from './../card/card';
 
 function Main({ firebaseAuthService }) {
@@ -18,10 +19,10 @@ function Main({ firebaseAuthService }) {
       fileURL: 'coco.jpeg',
       owner: 'Tim',
       vaccines: [
-        { name: 'Canine distemper virus', date: '2018-09-11' },
-        { name: 'Rabies', date: '2019-09-11' },
-        { name: 'Canine parvovirus', date: '2019-12-11' },
-        { name: 'Lyme disease', date: '2020-12-11' },
+        { id: '1', name: 'Canine distemper virus', date: '2018-09-11' },
+        { id: '2', name: 'Rabies', date: '2019-09-11' },
+        { id: '3', name: 'Canine parvovirus', date: '2019-12-11' },
+        { id: '4', name: 'Lyme disease', date: '2020-12-11' },
       ],
     },
     {
@@ -34,11 +35,12 @@ function Main({ firebaseAuthService }) {
       fileURL: 'coco.jpeg',
       owner: 'Young',
       vaccines: [
-        { name: 'Canine distemper virus', date: '2019-09-11' },
-        { name: 'Rabies', date: '2020-09-11' },
+        { id: '1', name: 'Canine distemper virus', date: '2019-09-11' },
+        { id: '2', name: 'Rabies', date: '2020-09-11' },
       ],
     },
   ]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,6 +53,9 @@ function Main({ firebaseAuthService }) {
     firebaseAuthService.logout();
   };
 
+  const addCard = (card) => {
+    setCards([...cards, card]);
+  };
   return (
     <div className={styles.mainContainer}>
       <Header logout={logout} />
@@ -58,13 +63,14 @@ function Main({ firebaseAuthService }) {
         <section className={styles.contentContainer}>
           <h1 className={styles.title}>Editor</h1>
           {cards.map((card) => (
-            <CardForm card={card} />
+            <CardEditForm key={'card form' + card.id} card={card} />
           ))}
+          <CardAddForm addCard={addCard} />
         </section>
         <section className={styles.contentContainer}>
           <h1 className={styles.title}>Preview</h1>
           {cards.map((card) => (
-            <Card card={card} />
+            <Card key={'card' + card.id} card={card} />
           ))}
         </section>
       </div>

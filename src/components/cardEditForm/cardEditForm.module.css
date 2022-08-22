@@ -1,0 +1,78 @@
+@value makerBlue, makerWhite, makerLightGrey  from '../../common/colors.css';
+
+
+.form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 2em;
+    padding: 1em;
+    max-width: 500px;
+
+}
+
+.name , .breed, .owner, .birthDate{
+    flex: 1 1 45%;
+}
+
+.birthDate{
+    display: flex;
+    gap: 1em;
+}
+
+.vaccineContiner{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+gap: 5px;
+}
+
+.vaccineTitle{
+    flex: 1 1 100%;
+}
+
+.vaccinInput{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.vaccineName , .vaccineDate{
+    flex: 1 1 35%;
+}
+
+.deleteBtn{
+    flex: 1 1 10%;
+    max-width: 100px;
+    cursor: pointer;
+
+}
+
+.addVaccineBtn{
+    background-color: transparent;
+    border: none;
+}
+
+.buttonContainer{
+    width: 100%;
+    display: flex;
+
+}
+
+.addBtn , .fileBtn{
+    flex: 1 1 45%;
+    margin-top: 1em;
+    background-color: makerBlue;
+    outline: none;
+    border: none;
+    color: makerWhite;
+    border-radius: 20px;
+    padding: 0.5em;
+    cursor: pointer;
+}
+
+.fileBtn{
+    background-color: makerLightGrey;
+}

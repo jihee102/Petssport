@@ -2,15 +2,12 @@ import React from 'react';
 import styles from './card.module.css';
 
 function Card({ card }) {
+  const defaultURL = card.fileURL || '/images/logo.png';
   return (
     <div className={styles.card}>
       <section className={styles.cardDetails}>
         <h3 className={styles.cardName}>{card.name}'s passport</h3>
-        <img
-          className={styles.image}
-          src={`./images/${card.fileURL}`}
-          alt={card.fileName}
-        />
+        <img className={styles.image} src={defaultURL} alt={card.fileName} />
       </section>
       <section className={styles.cardDetails}>
         <span>Name: {card.name}</span>
@@ -20,16 +17,20 @@ function Card({ card }) {
       </section>
       <section className={styles.vaccines}>
         <table>
-          <tr>
-            <th>Vaccine name</th>
-            <th>Injection Date</th>
-          </tr>
-          {card.vaccines.map((vaccine) => (
+          <thead>
             <tr>
-              <th>{vaccine.name}</th>
-              <th>{vaccine.date}</th>
+              <th>Vaccine name</th>
+              <th>Injection Date</th>
             </tr>
-          ))}
+          </thead>
+          <tbody>
+            {card.vaccines.map((vaccine, index) => (
+              <tr key={index}>
+                <th>{vaccine.name}</th>
+                <th>{vaccine.date}</th>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </section>
       <img className={styles.stamp} src='./images/stamp.png' alt='Stamp' />

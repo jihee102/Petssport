@@ -3,7 +3,7 @@ import Login from './components/login/login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from './components/main/main';
 
-function App({ firebaseAuthService }) {
+function App({ firebaseAuthService, database }) {
   return (
     <div className={styles.app}>
       <BrowserRouter>
@@ -15,7 +15,12 @@ function App({ firebaseAuthService }) {
           />
           <Route
             path='app'
-            element={<Main firebaseAuthService={firebaseAuthService} />}
+            element={
+              <Main
+                firebaseAuthService={firebaseAuthService}
+                database={database}
+              />
+            }
           />
         </Routes>
       </BrowserRouter>

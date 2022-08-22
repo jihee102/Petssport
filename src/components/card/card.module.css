@@ -38,7 +38,7 @@ tr{
     padding: 5px;
 }
 
-tr:first-of-type {
+thead {
     background-color: makerLightGrey;
 
 }
