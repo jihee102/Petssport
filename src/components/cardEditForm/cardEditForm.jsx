@@ -1,31 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import ImageFileInput from '../imageFileInput/imageFileInput';
 import styles from './cardEditForm.module.css';
 
-function CardEditForm({ card }) {
+function CardEditForm({ card, updateCard, deleteCard }) {
   const [vaccines, setVaccines] = useState(card ? card.vaccines : []);
+  const nameRef = useRef();
+  const breedRef = useRef();
+  const birthDateRef = useRef();
+  const ownerRef = useRef();
+  const vNameRef = useRef();
+  const vDateRef = useRef();
 
-  const addVaccineColumn = (e) => {
+  const onChange = (e) => {
+    if (e.currentTarget === null) {
+      return;
+    }
+
     e.preventDefault();
-    setVaccines([...vaccines, { name: '' }]);
+    updateCard({
+      ...card,
+      [e.currentTarget.name]: e.currentTarget.value,
+    });
   };
 
-  const detailUpdated = (e) => {
-    console.log(e.target.name);
-    if (e.target.name === 'vName' || e.target.name === 'vDate') {
-    } else {
-    }
+  const updateVaccine = (e, id) => {
+    setVaccines(
+      vaccines.map((v) =>
+        v.id === id
+          ? { ...v, [e.currentTarget.name]: e.currentTarget.value }
+          : v
+      )
+    );
+    updateCard({
+      ...card,
+      vaccines: [...vaccines],
+    });
   };
 
   const deleteVaccine = (e, id) => {
-    console.log(id);
     e.preventDefault();
     setVaccines(vaccines.filter((v) => v.id !== id));
+    updateCard({ ...card, vaccines: vaccines });
   };
 
-  const deleteCard = (e) => {
+  const saveVaccine = (e) => {
     e.preventDefault();
+    setVaccines([
+      ...vaccines,
+      {
+        id: `v${Date.now()}`,
+        name: vNameRef.current.value,
+        date: vDateRef.current.value,
+      },
+    ]);
+    vNameRef.current.value = '';
+    vDateRef.current.value = '';
   };
+
   return (
     <form className={styles.form}>
       <input
@@ -34,7 +65,8 @@ function CardEditForm({ card }) {
         placeholder='Name'
         name='name'
         value={card && card.name}
-        onChange={detailUpdated}
+        ref={nameRef}
+        onChange={onChange}
       />
 
       <input
@@ -42,8 +74,9 @@ function CardEditForm({ card }) {
         type='text'
         placeholder='Breed'
         name='breed'
+        ref={breedRef}
         value={card && card.breed}
-        onChange={detailUpdated}
+        onChange={onChange}
       />
       <div className={styles.birthDate}>
         <span>Born in</span>
@@ -51,8 +84,9 @@ function CardEditForm({ card }) {
           type='date'
           placeholder='Birth Date'
           name='birthDate'
+          ref={birthDateRef}
           value={card && card.birthDate}
-          onChange={detailUpdated}
+          onChange={onChange}
         />
       </div>
       <input
@@ -60,8 +94,9 @@ function CardEditForm({ card }) {
         type='text'
         placeholder='Owner Name'
         name='owner'
+        ref={ownerRef}
         value={card && card.owner}
-        onChange={detailUpdated}
+        onChange={onChange}
       />
       <div className={styles.vaccineContiner}>
         <span className={styles.vaccineTitle}>Vaccine Information</span>
@@ -71,16 +106,16 @@ function CardEditForm({ card }) {
               className={styles.vaccineName}
               type='text'
               placeholder='Vaccine Name'
-              name='vName'
+              name='name'
               value={v.name}
-              onChange={detailUpdated}
+              onChange={(e) => updateVaccine(e, v.id)}
             />
             <input
               className={styles.vaccineDate}
               type='date'
-              name='vDate'
+              name='date'
               value={v.date}
-              onChange={detailUpdated}
+              onChange={(e) => updateVaccine(e, v.id)}
             />
             <button
               className={styles.deleteBtn}
@@ -90,15 +125,33 @@ function CardEditForm({ card }) {
             </button>
           </div>
         ))}
-        <button className={styles.addVaccineBtn} onClick={addVaccineColumn}>
-          +
-        </button>
+        <div className={styles.vaccinInput}>
+          <input
+            className={styles.vaccineName}
+            type='text'
+            placeholder='Vaccine Name'
+            name='name'
+            ref={vNameRef}
+          />
+          <input
+            className={styles.vaccineDate}
+            type='date'
+            name='date'
+            ref={vDateRef}
+          />
+          <button className={styles.deleteBtn} onClick={saveVaccine}>
+            Save
+          </button>
+        </div>
       </div>
       <div className={styles.buttonContainer}>
         <div className={styles.fileBtn}>
           <ImageFileInput />
         </div>
-        <button className={styles.addBtn} onClick={deleteCard}>
+        <button
+          className={styles.addBtn}
+          onClick={(e) => deleteCard(e, card.id)}
+        >
           Delete{' '}
         </button>
       </div>

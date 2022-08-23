@@ -56,6 +56,17 @@ function Main({ firebaseAuthService }) {
   const addCard = (card) => {
     setCards([...cards, card]);
   };
+
+  const updateCard = (card) => {
+    const updatedList = cards.map((c) => (c.id === card.id ? card : c));
+    setCards([...updatedList]);
+  };
+
+  const deleteCard = (e, id) => {
+    e.preventDefault();
+    const filteredList = cards.filter((c) => c.id !== id);
+    setCards([...filteredList]);
+  };
   return (
     <div className={styles.mainContainer}>
       <Header logout={logout} />
@@ -63,7 +74,12 @@ function Main({ firebaseAuthService }) {
         <section className={styles.contentContainer}>
           <h1 className={styles.title}>Editor</h1>
           {cards.map((card) => (
-            <CardEditForm key={'card form' + card.id} card={card} />
+            <CardEditForm
+              key={'card form' + card.id}
+              card={card}
+              updateCard={updateCard}
+              deleteCard={deleteCard}
+            />
           ))}
           <CardAddForm addCard={addCard} />
         </section>

@@ -11,17 +11,27 @@ function CardAddForm({ addCard }) {
   const ownerRef = useRef();
   const vNameRef = useRef();
   const vDateRef = useRef();
-  const vaccineFromRef = useRef();
 
-  const saveAndaddVaccineColumn = (e) => {
+  const saveVaccine = (e) => {
     e.preventDefault();
     const vaccine = {
       id: `v${Date.now()}`,
       name: vNameRef.current.value,
       date: vDateRef.current.value,
     };
-    vaccineFromRef.current.reset();
+    vNameRef.current.value = '';
+    vDateRef.current.value = '';
     setVaccines([...vaccines, vaccine]);
+  };
+
+  const updateVaccine = (e, id) => {
+    setVaccines(
+      vaccines.map((v) =>
+        v.id === id
+          ? { ...v, [e.currentTarget.name]: e.currentTarget.value }
+          : v
+      )
+    );
   };
 
   const deleteVaccine = (e, id) => {
@@ -42,6 +52,7 @@ function CardAddForm({ addCard }) {
       vaccines: [...vaccines],
     };
     formRef.current.reset();
+    setVaccines([]);
     addCard(card);
   };
   return (
@@ -85,14 +96,16 @@ function CardAddForm({ addCard }) {
               className={styles.vaccineName}
               type='text'
               placeholder='Vaccine Name'
-              name='vName'
+              name='name'
               value={v.name}
+              onChange={(e) => updateVaccine(e, v.id)}
             />
             <input
               className={styles.vaccineDate}
               value={v.date}
               type='date'
-              name='vDate'
+              name='date'
+              onChange={(e) => updateVaccine(e, v.id)}
             />
 
             <button
@@ -103,7 +116,7 @@ function CardAddForm({ addCard }) {
             </button>
           </div>
         ))}
-        <form className={styles.vaccinInput} ref={vaccineFromRef}>
+        <div className={styles.vaccinInput}>
           <input
             ref={vNameRef}
             className={styles.vaccineName}
@@ -117,13 +130,10 @@ function CardAddForm({ addCard }) {
             type='date'
             name='vDate'
           />
-          <button
-            className={styles.deleteBtn}
-            onClick={saveAndaddVaccineColumn}
-          >
+          <button className={styles.deleteBtn} onClick={saveVaccine}>
             Add
           </button>
-        </form>
+        </div>
       </div>
       <div className={styles.buttonContainer}>
         <div className={styles.fileBtn}>
