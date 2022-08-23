@@ -8,8 +8,8 @@ import CardEditForm from '../cardEditForm/cardEditForm';
 import Card from './../card/card';
 
 function Main({ firebaseAuthService }) {
-  const [cards, setCards] = useState([
-    {
+  const [cards, setCards] = useState({
+    1: {
       id: '1',
       name: 'Coco',
       birthDate: '2018-03-24',
@@ -25,7 +25,7 @@ function Main({ firebaseAuthService }) {
         { id: '4', name: 'Lyme disease', date: '2020-12-11' },
       ],
     },
-    {
+    2: {
       id: '2',
       name: 'Song',
       birthDate: '2019-06-01',
@@ -39,7 +39,7 @@ function Main({ firebaseAuthService }) {
         { id: '2', name: 'Rabies', date: '2020-09-11' },
       ],
     },
-  ]);
+  });
 
   const navigate = useNavigate();
 
@@ -53,19 +53,19 @@ function Main({ firebaseAuthService }) {
     firebaseAuthService.logout();
   };
 
-  const addCard = (card) => {
-    setCards([...cards, card]);
-  };
-
-  const updateCard = (card) => {
-    const updatedList = cards.map((c) => (c.id === card.id ? card : c));
-    setCards([...updatedList]);
+  const createOrUpdateCard = (card) => {
+    const updatedList = { ...cards };
+    updatedList[card.id] = card;
+    setCards(updatedList);
   };
 
   const deleteCard = (e, id) => {
     e.preventDefault();
-    const filteredList = cards.filter((c) => c.id !== id);
-    setCards([...filteredList]);
+    setCards((cards) => {
+      const updated = { ...cards };
+      delete updated[id];
+      return updated;
+    });
   };
   return (
     <div className={styles.mainContainer}>
@@ -73,20 +73,20 @@ function Main({ firebaseAuthService }) {
       <div className={styles.content}>
         <section className={styles.contentContainer}>
           <h1 className={styles.title}>Editor</h1>
-          {cards.map((card) => (
+          {Object.keys(cards).map((key) => (
             <CardEditForm
-              key={'card form' + card.id}
-              card={card}
-              updateCard={updateCard}
+              key={'card form' + key}
+              card={cards[key]}
+              updateCard={createOrUpdateCard}
               deleteCard={deleteCard}
             />
           ))}
-          <CardAddForm addCard={addCard} />
+          <CardAddForm addCard={createOrUpdateCard} />
         </section>
         <section className={styles.contentContainer}>
           <h1 className={styles.title}>Preview</h1>
-          {cards.map((card) => (
-            <Card key={'card' + card.id} card={card} />
+          {Object.keys(cards).map((key) => (
+            <Card key={'card' + key} card={cards[key]} />
           ))}
         </section>
       </div>
