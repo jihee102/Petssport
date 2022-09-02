@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
-import ImageFileInput from '../imageFileInput/imageFileInput';
 import styles from './cardAddForm.module.css';
 
-function CardAddForm({ addCard }) {
+function CardAddForm({ FileInput, addCard }) {
   const [vaccines, setVaccines] = useState([]);
+  const [file, setFile] = useState({ fileName: null, fileURL: null });
   const formRef = useRef();
   const nameRef = useRef();
   const breedRef = useRef();
@@ -47,13 +47,21 @@ function CardAddForm({ addCard }) {
       breed: breedRef.current.value || '',
       birthDate: birthDateRef.current.value || '',
       owner: ownerRef.current.value || '',
-      fileName: '',
-      fileURL: '',
+      fileName: nameRef.current.value || '',
+      fileURL: file.fileURL || '',
       vaccines: [...vaccines],
     };
     formRef.current.reset();
     setVaccines([]);
+    setFile({ fileName: null, fileURL: null });
     addCard(card);
+  };
+
+  const onFileChange = (file) => {
+    setFile({
+      fileName: nameRef.current.value || 'No named image',
+      fileURL: file.url,
+    });
   };
   return (
     <form className={styles.form} ref={formRef}>
@@ -137,7 +145,7 @@ function CardAddForm({ addCard }) {
       </div>
       <div className={styles.buttonContainer}>
         <div className={styles.fileBtn}>
-          <ImageFileInput />
+          <FileInput onFileChange={onFileChange} name={file.fileName} />
         </div>
         <button className={styles.addBtn} onClick={onSubmit}>
           Add

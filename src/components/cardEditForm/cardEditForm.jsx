@@ -1,8 +1,7 @@
 import React, { useState, useRef } from 'react';
-import ImageFileInput from '../imageFileInput/imageFileInput';
 import styles from './cardEditForm.module.css';
 
-function CardEditForm({ card, updateCard, deleteCard }) {
+function CardEditForm({ FileInput, card, updateCard, deleteCard }) {
   const [vaccines, setVaccines] = useState(card ? card.vaccines : []);
   const nameRef = useRef();
   const breedRef = useRef();
@@ -57,6 +56,12 @@ function CardEditForm({ card, updateCard, deleteCard }) {
     vDateRef.current.value = '';
   };
 
+  const onFileChange = (link) => {
+    updateCard({
+      ...card,
+      fileURL: link,
+    });
+  };
   return (
     <form className={styles.form}>
       <input
@@ -145,8 +150,8 @@ function CardEditForm({ card, updateCard, deleteCard }) {
         </div>
       </div>
       <div className={styles.buttonContainer}>
-        <div className={styles.fileBtn}>
-          <ImageFileInput />
+        <div className={`${styles.fileBtn} + ${card.fileURL && styles.filled}`}>
+          <FileInput onFileChange={onFileChange} name={card.fileName || ''} />
         </div>
         <button
           className={styles.addBtn}

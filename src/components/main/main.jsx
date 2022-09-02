@@ -7,7 +7,7 @@ import CardAddForm from '../cardAddForm/cardAddForm';
 import CardEditForm from '../cardEditForm/cardEditForm';
 import Card from './../card/card';
 
-function Main({ firebaseAuthService }) {
+function Main({ FileInput, firebaseAuthService }) {
   const [cards, setCards] = useState({
     1: {
       id: '1',
@@ -79,9 +79,10 @@ function Main({ firebaseAuthService }) {
               card={cards[key]}
               updateCard={createOrUpdateCard}
               deleteCard={deleteCard}
+              FileInput={FileInput}
             />
           ))}
-          <CardAddForm addCard={createOrUpdateCard} />
+          <CardAddForm addCard={createOrUpdateCard} FileInput={FileInput} />
         </section>
         <section className={styles.contentContainer}>
           <h1 className={styles.title}>Preview</h1>

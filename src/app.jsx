@@ -3,7 +3,7 @@ import Login from './components/login/login';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Main from './components/main/main';
 
-function App({ firebaseAuthService, database }) {
+function App({ FileInput, firebaseAuthService, database }) {
   return (
     <div className={styles.app}>
       <BrowserRouter>
@@ -19,6 +19,7 @@ function App({ firebaseAuthService, database }) {
               <Main
                 firebaseAuthService={firebaseAuthService}
                 database={database}
+                FileInput={FileInput}
               />
             }
           />
